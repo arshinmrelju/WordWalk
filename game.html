@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Walk — Word Search</title>
+    <meta name="description" content="Word Walk Word Search — Jesus Youth Pazhassiraja College 2026">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Shared design system -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Game-specific overrides -->
+    <link rel="stylesheet" href="game.css">
+</head>
+<body class="executive-theme page-game">
+
+    <!-- Background dot grid (same as index.html) -->
+    <div class="bg-grid-mesh" aria-hidden="true"></div>
+
+    <div class="game-page-wrap">
+
+        <!-- Unified Header (shared across all pages — one brand, no copies) -->
+        <header class="app-header animate-fade-in">
+            <div class="header-inner">
+                <a class="header-college-logo" href="index.html" aria-label="Word Walk home">
+                    <img src="assets/Pazhassiraja_College_Pulpally_Logo.png" alt="Pazhassiraja College Pulpally" class="college-logo-img">
+                </a>
+                <div class="header-brand">
+                    <a class="header-logo-icon" href="index.html" aria-label="Word Walk home">
+                        <span class="logo-letter">W</span>
+                        <span class="logo-letter logo-letter-accent">W</span>
+                    </a>
+                    <div class="header-brand-info">
+                        <h1 class="header-app-title">Word <span class="gold-text">Walk</span></h1>
+                        <span class="header-page-label" data-page="game">Word Search</span>
+                    </div>
+                </div>
+
+                <!-- Game-specific actions -->
+                <div class="header-actions">
+
+                    <!-- Player badge -->
+                    <div class="player-badge" id="player-badge">
+                        <svg class="player-badge-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        <span class="player-badge-name" id="player-name-display">Player</span>
+                        <span class="player-badge-sep">|</span>
+                        <span class="player-badge-dept" id="player-dept-display">—</span>
+                    </div>
+
+                    <!-- Sound toggle -->
+                    <button class="sound-toggle-btn" id="sound-toggle-btn" type="button" title="Toggle sound" aria-label="Toggle sound">
+                        <svg class="icon-sound-on" id="sound-icon-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                        </svg>
+                        <svg class="icon-sound-off hidden" id="sound-icon-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                            <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+                        </svg>
+                    </button>
+
+                    <!-- Live stats -->
+                    <div class="game-stats-row">
+                        <div class="stat-capsule stat-capsule-level" id="level-capsule" title="Progressive Game Difficulty Level">
+                            <span class="stat-capsule-label">Level</span>
+                            <span class="stat-capsule-val" id="level-val">Lvl 1</span>
+                        </div>
+                        <div class="stat-capsule">
+                            <span class="stat-capsule-label">Found</span>
+                            <span class="stat-capsule-val" id="found-count">0 / 8</span>
+                        </div>
+                        <div class="stat-capsule stat-capsule-gold">
+                            <span class="stat-capsule-label">Score</span>
+                            <span class="stat-capsule-val gold-text" id="score-val">0</span>
+                        </div>
+                        <div class="stat-capsule stat-capsule-purple">
+                            <span class="stat-capsule-label">Total</span>
+                            <span class="stat-capsule-val" id="cumulative-score">0</span>
+                        </div>
+                        <div class="stat-capsule stat-capsule-timer" id="timer-capsule">
+                            <span class="stat-capsule-label">Time</span>
+                            <span class="stat-capsule-val timer-mono" id="timer-val">05:00</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+        <!-- ── TIMER PROGRESS BAR ── -->
+        <div class="timer-rail" role="progressbar" aria-label="Time remaining">
+            <div class="timer-rail-fill" id="timer-bar-fill"></div>
+        </div>
+
+        <!-- ── MAIN CONTENT ── -->
+        <main class="game-main">
+
+            <!-- WORD LIST card (glass-card style) -->
+            <section class="glass-card word-list-card animate-fade-in">
+                <div class="wl-header">
+                    <div class="card-icon card-icon-gold" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                    </div>
+                    <p class="card-title">Find These Words</p>
+                </div>
+                <ul class="word-list" id="word-list"></ul>
+            </section>
+
+            <!-- GRID card (glass-card style) -->
+            <section class="glass-card grid-card animate-fade-in">
+                <div class="grid-card-header">
+                    <div class="card-icon" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                            <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+                        </svg>
+                    </div>
+                    <p class="card-title">Letter Grid</p>
+                    <span class="grid-hint-pill">Click &amp; drag to select</span>
+                </div>
+                <div class="grid-wrapper">
+                    <div class="grid" id="grid"></div>
+                </div>
+            </section>
+
+            <!-- ── GAME HISTORY CARD ── -->
+            <section class="glass-card history-card animate-fade-in">
+                <div class="history-header">
+                    <div class="card-icon" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <p class="card-title">Your Game History</p>
+                </div>
+                <div id="history-list" class="history-list"></div>
+            </section>
+
+        </main>
+
+        <!-- ── FOOTER ── -->
+        <footer class="footer animate-fade-in">
+            <p>&copy; 2026 Word Walk &bull; <strong>Jesus Youth Pazhassiraja College</strong></p>
+            <p class="footer-built-by">Powered by <a class="footer-brand-link" href="https://graphiccity.in" target="_blank" rel="noopener noreferrer"><img src="assets/graphiccity-logo.svg" alt="GraphicCity" class="footer-brand-logo"><strong>GraphicCity</strong></a></p>
+        </footer>
+
+    </div><!-- /game-page-wrap -->
+
+    <!-- ════ OVERLAYS ════ -->
+
+    <!-- Live Admin Message Popup (pauses timer while open) -->
+    <div class="overlay-backdrop hidden" id="admin-msg-overlay" role="dialog" aria-modal="true">
+        <div class="glass-card overlay-dialog admin-msg-dialog">
+            <div class="admin-msg-icon" aria-hidden="true">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,6 12,13 2,6"/>
+                </svg>
+            </div>
+            <h2 class="overlay-title">Message from Admin</h2>
+            <p class="overlay-sub">You received a live announcement from the admin.</p>
+            <div class="admin-msg-body" id="admin-msg-body"></div>
+            <div class="btn-group">
+                <button class="glass-btn btn-primary" onclick="WS.closeAdminMessage()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Ended by Admin (shown to all live players in real time) -->
+    <div class="overlay-backdrop hidden" id="ended-overlay" role="dialog" aria-modal="true">
+        <div class="glass-card overlay-dialog ended-dialog">
+            <div class="ended-icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+            </div>
+            <h2 class="overlay-title">Game Ended</h2>
+            <p class="overlay-sub">The admin has ended this game session. The game is now closed for all players — thank you for playing Word Walk!</p>
+
+            <div class="score-showcase">
+                <span class="score-showcase-num gold-text" id="ended-round-score">0</span>
+                <span class="score-showcase-label">this game</span>
+            </div>
+            <div class="score-showcase score-showcase-sm">
+                <span class="score-showcase-num" id="ended-cumulative-score">0</span>
+                <span class="score-showcase-label">cumulative total</span>
+            </div>
+
+            <div class="btn-group">
+                <button class="glass-btn btn-primary" onclick="WS.goToMainMenu()">Return to Main Menu</button>
+                <button class="glass-btn btn-secondary" onclick="WS.openLeaderboard()">View Leaderboard</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- End (win / time-up) -->
+    <div class="overlay-backdrop hidden" id="overlay-end" role="dialog" aria-modal="true">
+        <div class="glass-card overlay-dialog">
+            <div class="overlay-trophy" id="end-emoji">🏆</div>
+            <h2 class="overlay-title" id="end-title">You Found Them All!</h2>
+            <p class="overlay-sub" id="end-sub"></p>
+
+            <div class="score-showcase">
+                <span class="score-showcase-num gold-text" id="score-result-num">0</span>
+                <span class="score-showcase-label">this game</span>
+            </div>
+            <div class="score-showcase score-showcase-sm" id="time-bonus-showcase">
+                <span class="score-showcase-num" style="color: #10b981;" id="time-bonus-num">+0</span>
+                <span class="score-showcase-label" id="time-bonus-label">speed bonus</span>
+            </div>
+            <div class="score-showcase score-showcase-sm">
+                <span class="score-showcase-num" id="cumulative-result-num">0</span>
+                <span class="score-showcase-label">cumulative total</span>
+            </div>
+
+            <!-- End round word meanings review section -->
+            <div id="end-definitions-summary" class="end-definitions-wrap hidden">
+                <h4 class="end-defs-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                    </svg>
+                    <span>Word Meanings Discovered</span>
+                </h4>
+                <div id="end-defs-list" class="end-defs-list"></div>
+            </div>
+
+            <div class="btn-group">
+                <button class="glass-btn btn-primary" onclick="WS.restart()">Play Again</button>
+                <button class="glass-btn btn-secondary" onclick="WS.toggleOverlay()">Inspect Grid</button>
+                <button class="glass-btn btn-secondary" onclick="WS.openLeaderboard()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 5px;"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                    Leaderboard
+                </button>
+                <a href="index.html" class="glass-btn btn-secondary">Main Menu</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboard Popup (no redirect — stays in game.html) -->
+    <div class="overlay-backdrop hidden" id="leaderboard-overlay" role="dialog" aria-modal="true">
+        <div class="glass-card overlay-dialog leaderboard-dialog">
+            <div class="leaderboard-dialog-icon" aria-hidden="true">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+            </div>
+            <h2 class="overlay-title">Leaderboard</h2>
+            <p class="overlay-sub">Top scorers from today's competition</p>
+            <div class="lb-list-wrap">
+                <div id="game-lb-list" class="lb-list"></div>
+            </div>
+            <div class="btn-group">
+                <button class="glass-btn btn-secondary" onclick="WS.closeLeaderboard()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating button to bring back result modal when inspecting grid -->
+    <button id="reopen-overlay-btn" class="glass-btn btn-primary reopen-overlay-fab hidden" onclick="WS.toggleOverlay()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span>Show Results</span>
+    </button>
+
+    <!-- Floating Non-Blocking Definition Toast / Banner -->
+    <div id="definition-banner" class="definition-banner hidden" role="status" aria-live="polite">
+        <div class="def-banner-content">
+            <div class="def-banner-header">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="def-banner-svg">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                <span class="def-banner-word" id="def-banner-word">WORD</span>
+                <span class="def-banner-badge">Found!</span>
+            </div>
+            <p class="def-banner-text" id="def-banner-text">Definition goes here...</p>
+        </div>
+        <button class="def-banner-close" onclick="WS.hideDefinitionBanner()" aria-label="Close definition">&times;</button>
+    </div>
+
+    <!-- Toast stack -->
+    <div id="toast-area" class="toast-stack" aria-live="polite"></div>
+
+    <script type="module" src="firebase-service.js"></script>
+    <script src="dictionary.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

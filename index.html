@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Walk — Jesus Youth Pazhassiraja College</title>
+    <meta name="description"
+        content="Walk in faith and beat the clock in Word Walk, the ultimate word game for Jesus Youth Pazhassiraja College.">
+    <!-- Google Fonts: Cinzel & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Firebase Service Integration -->
+    <script type="module" src="firebase-service.js"></script>
+</head>
+
+<body class="executive-theme page-home">
+    <!-- Background Grid Mesh (Clean Academic Texture) -->
+    <div class="bg-grid-mesh" aria-hidden="true"></div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+
+        <!-- Unified Header (shared across all pages — one brand, no copies) -->
+        <header class="app-header animate-fade-in">
+            <div class="header-inner">
+                <a class="header-college-logo" href="index.html" aria-label="Word Walk home">
+                    <img src="assets/Pazhassiraja_College_Pulpally_Logo.png" alt="Pazhassiraja College Pulpally" class="college-logo-img">
+                </a>
+                <div class="header-brand">
+                    <a class="header-logo-icon" href="index.html" aria-label="Word Walk home">
+                        <span class="logo-letter">W</span>
+                        <span class="logo-letter logo-letter-accent">W</span>
+                    </a>
+                    <div class="header-brand-info">
+                        <h1 class="header-app-title">Word <span class="gold-text">Walk</span></h1>
+                        <span class="header-page-label" data-page="home">Home</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <span class="header-litfest-badge">Jesus Youth</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="landing-hero animate-fade-in">
+            <div class="hero-badge">Jesus Youth Pazhassiraja College</div>
+            <h1 class="game-title">Word <span class="gold-text">Walk</span></h1>
+            <p class="hero-subtitle">Walk in the Word. Master the Clock.</p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                    </span>
+                    <span>5-Min Timer</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                    </span>
+                    <span>8–24 Hidden Words</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7" /><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" /></svg>
+                    </span>
+                    <span>Leaderboard</span>
+                </div>
+            </div>
+            <a href="#player-card" class="glass-btn btn-primary hero-cta">
+                <span class="btn-text">Play Now</span>
+                <span class="btn-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </span>
+            </a>
+        </section>
+
+        <!-- Content Grid -->
+        <main class="content-grid">
+
+            <!-- Player Registration Card -->
+            <section class="glass-card card-entrance player-card" id="player-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="card-title" id="form-card-title">Player Profile</h2>
+                        <p class="card-desc" id="form-card-desc">Enter your credentials to begin the Word Walk</p>
+                    </div>
+                </div>
+
+                <!-- ── NEW REGISTRATION FORM ── -->
+                <form id="player-form" class="player-form" novalidate>
+                    <!-- Player Name Field -->
+                    <div class="form-group" id="field-name">
+                        <label for="player-name" class="form-label">Player Name</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="player-name" class="glass-input" placeholder="Enter your name..."
+                                maxlength="30" autocomplete="off" required>
+                            <span class="input-focus-border"></span>
+                        </div>
+                        <div id="name-error" class="error-message" aria-live="polite"></div>
+                    </div>
+
+                    <!-- Phone / Mobile Number Field -->
+                    <div class="form-group" id="field-phone">
+                        <label for="player-phone" class="form-label">Phone Number</label>
+                        <div class="input-wrapper">
+                            <input type="tel" id="player-phone" class="glass-input" placeholder="Enter 10-digit mobile number..."
+                                maxlength="10" autocomplete="off" required pattern="[0-9]{10}">
+                            <span class="input-focus-border"></span>
+                        </div>
+                        <div id="phone-error" class="error-message" aria-live="polite"></div>
+                    </div>
+
+                    <!-- Roll Number Field -->
+                    <div class="form-group" id="field-roll">
+                        <label for="roll-number" class="form-label">Roll Number</label>
+                        <div class="select-wrapper">
+                            <select id="roll-number" class="glass-input glass-select" required>
+                                <option value="" disabled selected>Select your roll number...</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                                <option value="32">32</option>
+                                <option value="33">33</option>
+                                <option value="34">34</option>
+                                <option value="35">35</option>
+                                <option value="36">36</option>
+                                <option value="37">37</option>
+                                <option value="38">38</option>
+                                <option value="39">39</option>
+                                <option value="40">40</option>
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                                <option value="45">45</option>
+                                <option value="46">46</option>
+                                <option value="47">47</option>
+                                <option value="48">48</option>
+                                <option value="49">49</option>
+                                <option value="50">50</option>
+                                <option value="51">51</option>
+                                <option value="52">52</option>
+                                <option value="53">53</option>
+                                <option value="54">54</option>
+                                <option value="55">55</option>
+                                <option value="56">56</option>
+                                <option value="57">57</option>
+                                <option value="58">58</option>
+                                <option value="59">59</option>
+                                <option value="60">60</option>
+                                <option value="61">61</option>
+                                <option value="62">62</option>
+                                <option value="63">63</option>
+                                <option value="64">64</option>
+                                <option value="65">65</option>
+                                <option value="66">66</option>
+                                <option value="67">67</option>
+                                <option value="68">68</option>
+                                <option value="69">69</option>
+                                <option value="70">70</option>
+                                <option value="71">71</option>
+                                <option value="72">72</option>
+                                <option value="73">73</option>
+                                <option value="74">74</option>
+                                <option value="75">75</option>
+                                <option value="76">76</option>
+                                <option value="77">77</option>
+                                <option value="78">78</option>
+                                <option value="79">79</option>
+                                <option value="80">80</option>
+                                <option value="81">81</option>
+                                <option value="82">82</option>
+                                <option value="83">83</option>
+                                <option value="84">84</option>
+                                <option value="85">85</option>
+                                <option value="86">86</option>
+                                <option value="87">87</option>
+                                <option value="88">88</option>
+                                <option value="89">89</option>
+                                <option value="90">90</option>
+                                <option value="91">91</option>
+                                <option value="92">92</option>
+                                <option value="93">93</option>
+                                <option value="94">94</option>
+                                <option value="95">95</option>
+                                <option value="96">96</option>
+                                <option value="97">97</option>
+                                <option value="98">98</option>
+                                <option value="99">99</option>
+                                <option value="100">100</option>
+                            </select>
+                            <div class="select-arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div id="roll-error" class="error-message" aria-live="polite"></div>
+                    </div>
+
+                    <!-- Department Selection Field -->
+                    <div class="form-group">
+                        <label for="department" class="form-label">Department</label>
+                        <div class="select-wrapper">
+                            <select id="department" class="glass-input glass-select" required>
+                                <option value="" disabled selected>Select your department...</option>
+                                <option value="Department of Biochemistry">Department of Biochemistry</option>
+                                <option value="Department of Commerce">Department of Commerce</option>
+                                <option value="Department of Economics">Department of Economics</option>
+                                <option value="Department of English">Department of English</option>
+                                <option value="Department of History">Department of History</option>
+                                <option value="Department of Journalism and Mass Communication">Department of Journalism
+                                    and Mass Communication</option>
+                                <option value="Department of Microbiology">Department of Microbiology</option>
+                                <option value="Department of Travel and Tourism">Department of Travel and Tourism
+                                </option>
+                            </select>
+                            <div class="select-arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div id="department-error" class="error-message" aria-live="polite"></div>
+                    </div>
+
+                    <!-- Year of Study Selection Field -->
+                    <div class="form-group">
+                        <label for="year-of-study" class="form-label">Year of Study</label>
+                        <div class="select-wrapper">
+                            <select id="year-of-study" class="glass-input glass-select" required>
+                                <option value="" disabled selected>Select your year of study...</option>
+                                <option value="1st Year">1st Year</option>
+                                <option value="2nd Year">2nd Year</option>
+                                <option value="3rd Year">3rd Year</option>
+                                <option value="1st Year PG">1st Year (PG)</option>
+                                <option value="2nd Year PG">2nd Year (PG)</option>
+                            </select>
+                            <div class="select-arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div id="year-error" class="error-message" aria-live="polite"></div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="start-btn" class="glass-btn btn-primary">
+                        <span class="btn-text">Begin Walk</span>
+                        <span class="btn-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                                <polyline points="12 5 19 12 12 19" />
+                            </svg>
+                        </span>
+                    </button>
+                </form>
+
+                <!-- ── ALREADY REGISTERED TOGGLE ── -->
+                <div class="already-reg-divider">
+                    <span>or</span>
+                </div>
+                <button type="button" id="already-reg-toggle" class="already-reg-btn">
+                    Already Registered? Log in here
+                </button>
+
+                <!-- ── ALREADY REGISTERED FORM (hidden by default) ── -->
+                <form id="returning-form" class="player-form returning-form hidden" novalidate>
+                    <!-- Roll Number Lookup -->
+                    <div class="form-group">
+                        <label for="ret-roll" class="form-label">Roll Number</label>
+                        <div class="select-wrapper">
+                            <select id="ret-roll" class="glass-input glass-select" required>
+                                <option value="" disabled selected>Select your roll number...</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                                <option value="32">32</option>
+                                <option value="33">33</option>
+                                <option value="34">34</option>
+                                <option value="35">35</option>
+                                <option value="36">36</option>
+                                <option value="37">37</option>
+                                <option value="38">38</option>
+                                <option value="39">39</option>
+                                <option value="40">40</option>
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                                <option value="45">45</option>
+                                <option value="46">46</option>
+                                <option value="47">47</option>
+                                <option value="48">48</option>
+                                <option value="49">49</option>
+                                <option value="50">50</option>
+                                <option value="51">51</option>
+                                <option value="52">52</option>
+                                <option value="53">53</option>
+                                <option value="54">54</option>
+                                <option value="55">55</option>
+                                <option value="56">56</option>
+                                <option value="57">57</option>
+                                <option value="58">58</option>
+                                <option value="59">59</option>
+                                <option value="60">60</option>
+                                <option value="61">61</option>
+                                <option value="62">62</option>
+                                <option value="63">63</option>
+                                <option value="64">64</option>
+                                <option value="65">65</option>
+                                <option value="66">66</option>
+                                <option value="67">67</option>
+                                <option value="68">68</option>
+                                <option value="69">69</option>
+                                <option value="70">70</option>
+                                <option value="71">71</option>
+                                <option value="72">72</option>
+                                <option value="73">73</option>
+                                <option value="74">74</option>
+                                <option value="75">75</option>
+                                <option value="76">76</option>
+                                <option value="77">77</option>
+                                <option value="78">78</option>
+                                <option value="79">79</option>
+                                <option value="80">80</option>
+                                <option value="81">81</option>
+                                <option value="82">82</option>
+                                <option value="83">83</option>
+                                <option value="84">84</option>
+                                <option value="85">85</option>
+                                <option value="86">86</option>
+                                <option value="87">87</option>
+                                <option value="88">88</option>
+                                <option value="89">89</option>
+                                <option value="90">90</option>
+                                <option value="91">91</option>
+                                <option value="92">92</option>
+                                <option value="93">93</option>
+                                <option value="94">94</option>
+                                <option value="95">95</option>
+                                <option value="96">96</option>
+                                <option value="97">97</option>
+                                <option value="98">98</option>
+                                <option value="99">99</option>
+                                <option value="100">100</option>
+                            </select>
+                            <div class="select-arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div id="ret-roll-error" class="error-message" aria-live="polite"></div>
+                    </div>
+
+                    <!-- Department (for lookup) -->
+                    <div class="form-group">
+                        <label for="ret-department" class="form-label">Department</label>
+                        <div class="select-wrapper">
+                            <select id="ret-department" class="glass-input glass-select" required>
+                                <option value="" disabled selected>Select your department...</option>
+                                <option value="Department of Biochemistry">Department of Biochemistry</option>
+                                <option value="Department of Commerce">Department of Commerce</option>
+                                <option value="Department of Economics">Department of Economics</option>
+                                <option value="Department of English">Department of English</option>
+                                <option value="Department of History">Department of History</option>
+                                <option value="Department of Journalism and Mass Communication">Department of Journalism
+                                    and Mass Communication</option>
+                                <option value="Department of Microbiology">Department of Microbiology</option>
+                                <option value="Department of Travel and Tourism">Department of Travel and Tourism</option>
+                            </select>
+                            <div class="select-arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div id="ret-dept-error" class="error-message" aria-live="polite"></div>
+                    </div>
+
+                    <!-- Year (for lookup) -->
+                    <div class="form-group">
+                        <label for="ret-year" class="form-label">Year of Study</label>
+                        <div class="select-wrapper">
+                            <select id="ret-year" class="glass-input glass-select" required>
+                                <option value="" disabled selected>Select your year...</option>
+                                <option value="1st Year">1st Year</option>
+                                <option value="2nd Year">2nd Year</option>
+                                <option value="3rd Year">3rd Year</option>
+                                <option value="1st Year PG">1st Year (PG)</option>
+                                <option value="2nd Year PG">2nd Year (PG)</option>
+                            </select>
+                            <div class="select-arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div id="ret-year-error" class="error-message" aria-live="polite"></div>
+                    </div>
+
+                    <div id="ret-lookup-error" class="error-message ret-global-error" aria-live="polite"></div>
+
+                    <button type="submit" id="ret-start-btn" class="glass-btn btn-primary">
+                        <span class="btn-text">Find &amp; Begin Walk</span>
+                        <span class="btn-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                            </svg>
+                        </span>
+                    </button>
+
+                    <button type="button" id="ret-back-btn" class="ret-back-link">
+                        ← New Registration
+                    </button>
+                </form>
+            </section>
+
+
+            <!-- Word Quest Gameplay Guide Card -->
+            <section class="glass-card card-entrance rules-card" id="rules-card">
+                <div class="card-header">
+                    <div class="card-icon card-icon-gold">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <polygon points="12 8 8 16 16 16 12 8" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="card-title">How to Play Word Walk</h2>
+                        <p class="card-desc">Find all hidden words &amp; beat the clock to score top rank</p>
+                    </div>
+                </div>
+
+                <div class="rounds-list">
+                    <!-- Step 1 -->
+                    <div class="round-item">
+                        <div class="round-badge">01</div>
+                        <div class="round-content">
+                            <h3 class="round-title">Scan the Grid</h3>
+                            <p class="round-desc">Locate the hidden faith &amp; Bible vocabulary words scattered across the letter matrix — every level adds more words and a bigger grid, but the 5-minute timer never shrinks!</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="round-item">
+                        <div class="round-badge round-badge-navy">02</div>
+                        <div class="round-content">
+                            <h3 class="round-title">Drag to Select</h3>
+                            <p class="round-desc">Click or touch and drag across letters horizontally, vertically, or diagonally to form words.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="round-item">
+                        <div class="round-badge round-badge-gold">03</div>
+                        <div class="round-content">
+                            <h3 class="round-title">Score &amp; Beat the Clock</h3>
+                            <p class="round-desc">Earn +10 points per word found plus 2x time remaining points and extra speed tier bonus points for finishing faster!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Directives Footer -->
+                <div class="rules-footer">
+                    <div class="rule-chip">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                        <span>5-Min Timer</span>
+                    </div>
+                    <div class="rule-chip">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                            <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+                        </svg>
+                        <span>8–24 Hidden Words</span>
+                    </div>
+                    <div class="rule-chip">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="8" r="7" />
+                            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+                        </svg>
+                        <span>Leaderboard</span>
+                    </div>
+                    <div class="rule-chip">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                            <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+                            <line x1="3" y1="21" x2="21" y2="21"/><line x1="21" y1="3" x2="21" y2="21"/>
+                        </svg>
+                        <span>Bigger Grids</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Leaderboard Card -->
+            <section class="glass-card card-entrance leaderboard-card" id="leaderboard-card">
+                <div class="card-header">
+                    <div class="card-icon card-icon-gold">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="8" r="7"/>
+                            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="card-title">Leaderboard</h2>
+                        <p class="card-desc">Top scores from today's competition</p>
+                    </div>
+                </div>
+                <div class="leaderboard-section">
+                    <div class="leaderboard-table-wrapper">
+                        <table class="leaderboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lb-body">
+                                <tr><td colspan="4" style="text-align:center; opacity:0.6; padding:1rem;">Loading scores...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer animate-fade-in">
+            <p>&copy; 2026 Word Walk &bull; <strong>Jesus Youth Pazhassiraja College</strong></p>
+            <p class="footer-built-by">Powered by <a class="footer-brand-link" href="https://graphiccity.in" target="_blank" rel="noopener noreferrer"><img src="assets/graphiccity-logo.svg" alt="GraphicCity" class="footer-brand-logo"><strong>GraphicCity</strong></a></p>
+        </footer>
+
+    </div>
+
+    <!-- ── WELCOME BACK MODAL (already-registered player) ── -->
+    <div id="welcome-back-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <h2 class="modal-title" id="wb-modal-title">Welcome back!</h2>
+            <p class="modal-subtitle" id="wb-modal-subtitle">You're already registered as a player.</p>
+            <div class="modal-stats-grid">
+                <div class="modal-stat-card">
+                    <span class="mstat-label">Level</span>
+                    <span class="mstat-val" id="wb-modal-level">1</span>
+                </div>
+                <div class="modal-stat-card">
+                    <span class="mstat-label">Total Score</span>
+                    <span class="mstat-val" id="wb-modal-score">0</span>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="button" id="wb-continue-btn" class="glass-btn btn-primary">
+                    <span class="btn-text">Continue Quest</span>
+                    <span class="btn-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <polyline points="12 5 19 12 12 19" />
+                        </svg>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>

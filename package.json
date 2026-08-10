@@ -1,0 +1,11 @@
+{
+  "name": "word-walk",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Word Walk — daily Bible passage word-search for Jesus Youth",
+  "type": "module",
+  "scripts": {
+    "serve": "npx serve .",
+    "test": "node tests/grid.test.mjs"
+  }
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Word Walk · QR Codes for the Notice Board</title>
+  <style>
+    body { font-family: "Segoe UI", system-ui, Arial, sans-serif; background: #f6f1e7; color: #203b3b; margin: 0; padding: 1.5rem; }
+    h1 { font-family: Georgia, serif; margin: 0 0 0.3rem; }
+    p { color: #5c7070; margin: 0.2rem 0 1rem; }
+    .setup { background: #fff; border: 1px solid #e3d9c3; border-radius: 14px; padding: 1rem; margin-bottom: 1.4rem; max-width: 720px; }
+    label { display: block; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin: 0.6rem 0 0.3rem; }
+    input, select { width: 100%; padding: 0.7rem 0.9rem; border: 1.5px solid #e3d9c3; border-radius: 10px; font-size: 0.95rem; box-sizing: border-box; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+    .qr-card { background: #fff; border: 1px solid #e3d9c3; border-radius: 14px; padding: 1rem; text-align: center; break-inside: avoid; }
+    .qr-card h3 { margin: 0 0 0.2rem; font-family: Georgia, serif; font-size: 1.05rem; }
+    .qr-card .ref { color: #b9892f; font-style: italic; font-size: 0.85rem; margin: 0 0 0.8rem; }
+    .qr-card img, .qr-card canvas { max-width: 100%; height: auto; }
+    .qr-card .url { font-size: 0.7rem; color: #5c7070; word-break: break-all; margin-top: 0.6rem; }
+    .btn { background: #203b3b; color: #fdfaf2; border: none; border-radius: 999px; padding: 0.8rem 1.4rem; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 1rem; }
+    @media print {
+      body { background: #fff; padding: 0.5rem; }
+      .setup, .print-hide { display: none !important; }
+      .qr-card { border: 1px solid #ccc; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Word Walk — QR Codes</h1>
+  <p>Print these and stick them on the notice board. Scanning a code opens that day's page on a phone.</p>
+
+  <div class="setup">
+    <label for="base-url">Public site URL (deployed address)</label>
+    <input id="base-url" type="text" placeholder="https://your-app.web.app" />
+    <label for="day-select">Which days to show</label>
+    <select id="day-select">
+      <option value="all">All days</option>
+    </select>
+    <button class="btn" id="btn-refresh">Generate QR codes</button>
+    <button class="btn" id="btn-print">Print</button>
+  </div>
+
+  <div class="grid" id="qr-grid"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script type="module">
+    import { DAYS } from "./days.js";
+
+    const $ = (id) => document.getElementById(id);
+    const STORE_KEY = "wordWalk_qrBaseUrl";
+
+    $("base-url").value = localStorage.getItem(STORE_KEY) || "";
+    $("base-url").addEventListener("input", () => localStorage.setItem(STORE_KEY, $("base-url").value));
+
+    const daySel = $("day-select");
+    daySel.innerHTML = '<option value="all">All days</option>' +
+      DAYS.map((d) => `<option value="${d.id}">Day ${d.id} — ${d.title}</option>`).join("");
+
+    function render() {
+      const base = $("base-url").value.trim().replace(/\/+$/, "");
+      const grid = $("qr-grid");
+      grid.innerHTML = "";
+      if (!base) {
+        grid.innerHTML = "<p>Enter the deployed URL above first.</p>";
+        return;
+      }
+      const sel = daySel.value;
+      const days = sel === "all" ? DAYS : DAYS.filter((d) => String(d.id) === sel);
+      days.forEach((d) => {
+        const url = `${base}/index.html?day=${d.id}`;
+        const card = document.createElement("div");
+        card.className = "qr-card";
+        card.innerHTML =
+          `<h3>Day ${d.id}</h3>` +
+          `<p class="ref">${d.reference}</p>` +
+          `<div class="qrcode"></div>` +
+          `<p class="url">${url}</p>`;
+        grid.appendChild(card);
+        // eslint-disable-next-line no-undef
+        new QRCode(card.querySelector(".qrcode"), {
+          text: url,
+          width: 160,
+          height: 160,
+          correctLevel: QRCode.CorrectLevel.M
+        });
+      });
+    }
+
+    $("btn-refresh").addEventListener("click", render);
+    $("btn-print").addEventListener("click", () => window.print());
+    render();
+  </script>
+</body>
+</html>

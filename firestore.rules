@@ -1,6 +1,8 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Open read/write so the app works without auth.
+    // Lock this down later if needed (e.g. allow write: only creates/updates).
     match /{document=**} {
       allow read, write: if true;
     }
